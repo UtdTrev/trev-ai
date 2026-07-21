@@ -1,1580 +1,404 @@
-/* ==========================================================================
-   TREV AI MASTERCLASS - REFINED MASTER STYLESHEET
-   ========================================================================== */
-
-/* 1. RESET AND BASE STYLES */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-:root {
-  /* Monochrome + Accent Design Tokens */
-  --primary: #111111;
-  --secondary: #000000;
-  --accent: #F2B705;
-  --background: #ffffff;
-  --light: #fafafa;
-  --dark: #0a0a0a;
-  --text: #1a1a1a;
-  --text-muted: #6b6b6b;
-  --border: rgba(10, 10, 10, 0.14);
-  --border-dark: rgba(255, 255, 255, 0.14);
-  --white: #ffffff;
-
-  /* Typography */
-  --font-primary: 'Inter', sans-serif;
-  --font-secondary: 'Manrope', sans-serif;
-
-  /* Flat Design - Shadows Minimized */
-  --shadow-sm: none;
-  --shadow-md: none;
-  --shadow-lg: 0 12px 24px rgba(10, 10, 10, 0.06);
-  --shadow-glass: none;
-
-  /* Borders & Radius */
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 14px;
-  --radius-full: 9999px;
-
-  /* Header Height */
-  --header-height: 80px;
-
-  /* Premium Easing Curves */
-  --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  --transition-bounce: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.1);
-}
-
-/* Scroll-Margin Correction to avoid sticky header overlap */
-section[id],
-#pricing,
-#faq,
-#contact {
-  scroll-margin-top: var(--header-height);
-}
-
-html {
-  font-family: var(--font-primary);
-  font-size: 16px;
-  color: var(--text);
-  background-color: var(--background);
-  scroll-behavior: smooth;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-body {
-  overflow-x: hidden;
-  line-height: 1.6;
-}
-
-/* Skip Link Accessibility */
-.skip-link {
-  position: absolute;
-  top: -100px;
-  left: 10px;
-  background: var(--primary);
-  color: var(--white);
-  padding: 1rem;
-  z-index: 9999;
-  text-decoration: none;
-  font-weight: 600;
-  border-radius: var(--radius-sm);
-  transition: top 0.2s ease-in-out;
-}
-
-.skip-link:focus {
-  top: 10px;
-}
-
-/* Headings & Typography */
-h1, h2, h3, h4 {
-  font-family: var(--font-secondary);
-  font-weight: 800;
-  line-height: 1.2;
-  color: var(--dark);
-}
-
-h1 {
-  font-size: clamp(2.75rem, 6.5vw, 5.25rem);
-  letter-spacing: -0.04em;
-}
-
-h2 {
-  font-size: clamp(1.85rem, 4vw, 2.75rem);
-  letter-spacing: -0.02em;
-}
-
-h3 {
-  font-size: clamp(1.25rem, 2.5vw, 1.75rem);
-  letter-spacing: -0.01em;
-}
-
-h4 {
-  font-size: 1.15rem;
-}
-
-p {
-  font-size: 1rem;
-  color: var(--text-muted);
-}
-
-a {
-  color: var(--primary);
-  text-decoration: none;
-  transition: var(--transition-smooth);
-}
-
-a:hover {
-  color: var(--secondary);
-}
-
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-}
-::-webkit-scrollbar-track {
-  background: var(--light);
-}
-::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
-  border-radius: var(--radius-full);
-}
-::-webkit-scrollbar-thumb:hover {
-  background: var(--text-muted);
-}
-
-/* ==========================================================================
-   2. REUSABLE UTILITIES
-   ========================================================================== */
-.container {
-  width: 90%;
-  max-width: 1100px;
-  margin: 0 auto;
-}
-
-.max-w-lg { max-width: 750px; }
-.max-w-md { max-width: 600px; }
-.mx-auto { margin-left: auto; margin-right: auto; }
-
-.py-lg { padding-top: 7rem; padding-bottom: 7rem; }
-.py-md { padding-top: 5rem; padding-bottom: 5rem; }
-.py-sm { padding-top: 2.5rem; padding-bottom: 2.5rem; }
-
-.mt-lg { margin-top: 3.5rem; }
-.mt-md { margin-top: 2.5rem; }
-.mt-sm { margin-top: 1.5rem; }
-.mt-xs { margin-top: 0.75rem; }
-.mb-6 { margin-bottom: 1.5rem; }
-
-.text-center { text-align: center; }
-.text-white { color: var(--white); }
-.text-gray { color: var(--text-muted); }
-
-.bg-light { background-color: var(--light); }
-.bg-dark { background-color: var(--dark); }
-
-/* Flexible Grid Implementations */
-.grid-2 {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 3rem;
-  align-items: center;
-}
-
-.grid-3 {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
-}
-
-.grid-4 {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1.5rem;
-}
-
-.align-stretch {
-  align-items: stretch;
-}
-
-.align-center {
-  align-items: center;
-}
-
-/* Premium Gradients */
-.text-gradient {
-  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-/* Design Badge */
-.section-tag {
-  display: inline-block;
-  font-family: var(--font-primary);
-  font-weight: 700;
-  font-size: 0.8rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--primary);
-  margin-bottom: 1rem;
-}
-
-.section-heading {
-  margin-bottom: 1rem;
-}
-
-.section-desc {
-  font-size: 1.125rem;
-  max-width: 680px;
-  margin-left: auto;
-  margin-right: auto;
-  line-height: 1.6;
-}
-
-/* Buttons */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-primary);
-  font-weight: 600;
-  font-size: 0.95rem;
-  padding: 0.85rem 1.75rem;
-  border-radius: var(--radius-full);
-  border: 1.5px solid transparent;
-  cursor: pointer;
-  transition: var(--transition-smooth);
-  gap: 0.65rem;
-}
-
-.btn-primary {
-  background-color: var(--dark);
-  color: var(--white);
-}
-
-.btn-primary:hover {
-  background-color: var(--accent);
-  color: var(--dark);
-  transform: translateY(-2px);
-}
-
-.btn-secondary {
-  background-color: var(--accent);
-  color: var(--dark);
-  border-color: var(--accent);
-}
-
-.btn-secondary:hover {
-  background-color: var(--dark);
-  color: var(--white);
-  border-color: var(--dark);
-  transform: translateY(-2px);
-}
-
-.btn-outline {
-  background-color: transparent;
-  border-color: var(--dark);
-  color: var(--dark);
-}
-
-.btn-outline:hover {
-  background-color: var(--dark);
-  color: var(--white);
-  transform: translateY(-2px);
-}
-
-.btn-sm {
-  padding: 0.55rem 1.35rem;
-  font-size: 0.85rem;
-}
-
-.btn-full {
-  width: 100%;
-}
-
-/* Active Keyboard Focus Rings */
-button:focus-visible,
-a:focus-visible,
-input:focus-visible,
-textarea:focus-visible {
-  outline: 3px solid var(--accent);
-  outline-offset: 2px;
-}
-
-/* Screen Readers Only */
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  border: 0;
-}
-
-/* ==========================================================================
-   3. STICKY HEADER NAVIGATION
-   ========================================================================== */
-.main-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: var(--header-height);
-  background-color: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(226, 232, 240, 0.4);
-  z-index: 1000;
-  transition: var(--transition-smooth);
-}
-
-.main-header.scrolled {
-  height: 70px;
-  box-shadow: var(--shadow-sm);
-  background-color: rgba(255, 255, 255, 0.95);
-}
-
-.header-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 100%;
-}
-
-.logo {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-family: var(--font-secondary);
-  font-weight: 800;
-  font-size: 1.5rem;
-  color: var(--dark);
-}
-
-.logo-mark {
-  color: var(--dark);
-  flex-shrink: 0;
-}
-
-.logo-accent {
-  color: var(--primary);
-}
-
-.primary-nav {
-  display: flex;
-  align-items: center;
-  gap: 2.5rem;
-}
-
-.nav-links {
-  display: flex;
-  gap: 2rem;
-  list-style: none;
-}
-
-.nav-link {
-  font-weight: 600;
-  font-size: 0.95rem;
-  color: var(--text-muted);
-  position: relative;
-}
-
-.nav-link::after {
-  content: '';
-  position: absolute;
-  bottom: -4px;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background-color: var(--primary);
-  transition: var(--transition-smooth);
-}
-
-.nav-link:hover::after,
-.nav-link.active::after {
-  width: 100%;
-}
-
-.nav-link:hover,
-.nav-link.active {
-  color: var(--primary);
-}
-
-.menu-toggle {
-  display: none;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 24px;
-  height: 18px;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  z-index: 1001;
-}
-
-.menu-toggle .bar {
-  width: 100%;
-  height: 2px;
-  background-color: var(--dark);
-  border-radius: 2px;
-  transition: var(--transition-smooth);
-}
-
-/* ==========================================================================
-   4. HERO SECTION
-   ========================================================================== */
-.hero-section {
-  position: relative;
-  padding-top: 11rem;
-  padding-bottom: 7rem;
-  overflow: hidden;
-}
-
-.hero-bg-blobs {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-  pointer-events: none;
-  overflow: hidden;
-}
-
-.hero-scatter {
-  width: 100%;
-  height: 100%;
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0) scale(1); }
-  50% { transform: translateY(-30px) scale(1.1); }
-}
-
-.hero-content {
-  max-width: 900px;
-  margin: 0 auto;
-}
-
-.hero-title {
-  margin-bottom: 1.25rem;
-  color: var(--dark);
-}
-
-.badge {
-  display: inline-block;
-  background-color: rgba(10, 10, 10, 0.04);
-  border: 1px solid rgba(10, 10, 10, 0.12);
-  color: var(--primary);
-  font-family: var(--font-primary);
-  font-weight: 700;
-  font-size: 0.8rem;
-  letter-spacing: 0.05em;
-  padding: 0.45rem 1.15rem;
-  border-radius: var(--radius-full);
-  margin-bottom: 1.5rem;
-}
-
-.hero-subheadline {
-  font-size: clamp(1.1rem, 2.5vw, 1.35rem);
-  margin-top: 1.25rem;
-  margin-bottom: 2.75rem;
-  line-height: 1.6;
-}
-
-.hero-actions {
-  display: flex;
-  justify-content: center;
-  gap: 1.25rem;
-  flex-wrap: wrap;
-}
-
-.hero-stats {
-  display: flex;
-  justify-content: center;
-  gap: 5rem;
-  margin-top: 5rem;
-  border-top: 1px solid var(--border);
-  padding-top: 2.5rem;
-}
-
-.stat-item h3 {
-  font-size: 2.25rem;
-  color: var(--primary);
-}
-
-.stat-item span {
-  font-family: var(--font-secondary);
-  font-weight: 800;
-  font-size: 2.25rem;
-  color: var(--primary);
-}
-
-.stat-item p {
-  font-size: 0.95rem;
-  font-weight: 500;
-}
-
-/* ==========================================================================
-   5. TRUSTED BY SECTION
-   ========================================================================== */
-.trusted-logos {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 4rem;
-  margin-top: 1.5rem;
-}
-
-.logo-item {
-  font-family: var(--font-secondary);
-  font-weight: 800;
-  font-size: 1.25rem;
-  color: #94a3b8;
-  opacity: 0.85;
-  transition: var(--transition-smooth);
-}
-
-.logo-item:hover {
-  color: var(--text-muted);
-  opacity: 1;
-}
-
-/* ==========================================================================
-   6. ABOUT SECTION
-   ========================================================================== */
-.mv-card {
-  display: flex;
-  gap: 1.5rem;
-  margin-top: 2.5rem;
-}
-
-.icon-wrapper {
-  flex-shrink: 0;
-  width: 54px;
-  height: 54px;
-  border-radius: var(--radius-sm);
-  background-color: rgba(10, 10, 10, 0.04);
-  color: var(--primary);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid rgba(10, 10, 10, 0.08);
-}
-
-.mv-card h3 {
-  font-size: 1.35rem;
-  margin-bottom: 0.35rem;
-}
-
-.brand-pillars-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1.5rem;
-}
-
-.pillar-card {
-  background-color: var(--background);
-  border: 1px solid var(--border);
-  padding: 2.25rem;
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-sm);
-  transition: var(--transition-smooth);
-}
-
-.pillar-card:hover {
-  transform: translateY(-6px);
-  box-shadow: var(--shadow-lg);
-  border-color: var(--primary);
-}
-
-.pillar-card h4 {
-  color: var(--primary);
-  margin-bottom: 0.5rem;
-}
-
-.pillar-card p {
-  font-size: 0.9rem;
-}
-
-/* ==========================================================================
-   7. WHY LEARN AI SECTION
-   ========================================================================== */
-.why-card {
-  background-color: var(--background);
-  border: 1px solid var(--border);
-  padding: 2.5rem;
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-sm);
-  transition: var(--transition-smooth);
-}
-
-.why-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-lg);
-  border-color: var(--accent);
-}
-
-.why-icon-wrapper {
-  margin-bottom: 1.5rem;
-}
-
-.why-card h3 {
-  margin-bottom: 0.75rem;
-}
-
-/* ==========================================================================
-   8. FEATURES BENTO SECTION
-   ========================================================================== */
-.features-bento {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
-}
-
-.bento-item {
-  background-color: var(--background);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 2.25rem;
-  position: relative;
-  overflow: hidden;
-  transition: var(--transition-smooth);
-}
-
-.bento-item:hover {
-  box-shadow: var(--shadow-lg);
-  border-color: var(--accent);
-}
-
-.bento-large {
-  grid-column: span 2;
-  background: linear-gradient(135deg, var(--light) 0%, rgba(242, 183, 5, 0.08) 100%);
-}
-
-.bento-icon-box {
-  width: 42px;
-  height: 42px;
-  border-radius: var(--radius-sm);
-  background-color: rgba(10, 10, 10, 0.04);
-  color: var(--primary);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 1.25rem;
-  border: 1px solid rgba(10, 10, 10, 0.08);
-}
-
-.bento-content h3 {
-  margin-bottom: 0.5rem;
-}
-
-.bento-badge {
-  position: absolute;
-  top: 1.5rem;
-  right: 1.5rem;
-  font-size: 0.75rem;
-  font-weight: 700;
-  color: var(--primary);
-  background-color: rgba(10, 10, 10, 0.04);
-  padding: 0.25rem 0.85rem;
-  border-radius: var(--radius-full);
-}
-
-/* ==========================================================================
-   9. BENEFITS SECTION
-   ========================================================================== */
-.benefit-tile {
-  display: flex;
-  gap: 1.5rem;
-  background-color: #111524;
-  padding: 2.5rem 2rem;
-  border-radius: var(--radius-md);
-  border: 1px solid var(--border-dark);
-  transition: var(--transition-smooth);
-}
-
-.benefit-tile:hover {
-  border-color: var(--accent);
-  background-color: #161c31;
-  transform: translateY(-2px);
-}
-
-.benefit-marker {
-  font-family: var(--font-secondary);
-  font-size: 2rem;
-  font-weight: 800;
-  color: var(--accent);
-  line-height: 1;
-}
-
-.benefit-tile h3 {
-  color: var(--white);
-  font-size: 1.25rem;
-  margin-bottom: 0.5rem;
-}
-
-.benefit-tile p {
-  color: #94a3b8;
-  font-size: 0.95rem;
-}
-
-/* ==========================================================================
-   10. COURSE MODULES ACCORDION
-   ========================================================================== */
-.accordion-item {
-  border: 1px solid var(--border);
-  background-color: var(--background);
-  border-radius: var(--radius-sm);
-  margin-bottom: 1rem;
-  overflow: hidden;
-  transition: var(--transition-smooth);
-}
-
-.accordion-item:hover {
-  border-color: var(--primary);
-}
-
-.accordion-header {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  padding: 1.5rem;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  text-align: left;
-  gap: 1rem;
-}
-
-.mod-num {
-  font-family: var(--font-secondary);
-  font-weight: 800;
-  color: var(--primary);
-}
-
-.mod-title {
-  font-weight: 700;
-  font-size: 1.15rem;
-  color: var(--dark);
-  flex-grow: 1;
-}
-
-.accordion-icon {
-  position: relative;
-  width: 16px;
-  height: 16px;
-  flex-shrink: 0;
-}
-
-.accordion-icon::before,
-.accordion-icon::after {
-  content: '';
-  position: absolute;
-  background-color: var(--text-muted);
-  transition: var(--transition-smooth);
-}
-
-.accordion-icon::before {
-  top: 7px;
-  left: 0;
-  width: 100%;
-  height: 2px;
-}
-
-.accordion-icon::after {
-  top: 0;
-  left: 7px;
-  width: 2px;
-  height: 100%;
-}
-
-.accordion-header[aria-expanded="true"] .accordion-icon::after {
-  transform: rotate(90deg);
-  opacity: 0;
-}
-
-.accordion-header[aria-expanded="true"] .accordion-icon::before {
-  background-color: var(--primary);
-}
-
-.accordion-panel {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.accordion-content {
-  padding: 0 1.5rem 1.5rem 3rem;
-  border-top: 1px solid transparent;
-}
-
-.accordion-content p {
-  margin-bottom: 1.25rem;
-}
-
-.accordion-content ul {
-  list-style: none;
-}
-
-.accordion-content li {
-  position: relative;
-  font-size: 0.95rem;
-  color: var(--text);
-  padding-left: 1.5rem;
-  margin-bottom: 0.65rem;
-}
-
-.accordion-content li::before {
-  content: "✓";
-  position: absolute;
-  left: 0;
-  color: var(--primary);
-  font-weight: bold;
-}
-
-/* ==========================================================================
-   11. LEARNING ROADMAP
-   ========================================================================== */
-.roadmap-timeline {
-  position: relative;
-  padding-left: 2rem;
-  border-left: 2px solid var(--border);
-}
-
-.timeline-step {
-  position: relative;
-  margin-bottom: 3.5rem;
-}
-
-.timeline-step:last-child {
-  margin-bottom: 0;
-}
-
-.step-num {
-  position: absolute;
-  left: calc(-2rem - 13px);
-  top: 0;
-  width: 26px;
-  height: 26px;
-  border-radius: var(--radius-full);
-  background-color: var(--primary);
-  color: var(--white);
-  font-size: 0.65rem;
-  font-weight: 800;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 0 0 4px var(--background);
-}
-
-.step-details h3 {
-  font-size: 1.35rem;
-  margin-bottom: 0.5rem;
-}
-
-/* ==========================================================================
-   12. BONUSES SECTION
-   ========================================================================== */
-.bonus-card {
-  background-color: var(--background);
-  border: 1px solid var(--border);
-  padding: 2.25rem;
-  border-radius: var(--radius-md);
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  transition: var(--transition-smooth);
-}
-
-.bonus-card:hover {
-  transform: translateY(-4px);
-  border-color: var(--primary);
-  box-shadow: var(--shadow-lg);
-}
-
-.bonus-icon-wrapper {
-  margin-bottom: 1.25rem;
-}
-
-.bonus-card h3 {
-  font-size: 1.25rem;
-  margin-bottom: 0.5rem;
-}
-
-.bonus-card p {
-  font-size: 0.95rem;
-  flex-grow: 1;
-  margin-bottom: 1.75rem;
-}
-
-.bonus-value {
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: var(--primary);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-/* ==========================================================================
-   13. INSTRUCTOR SECTION
-   ========================================================================== */
-.instructor-card-ui {
-  background-color: var(--background);
-  border: 1px solid var(--border);
-  padding: 3.5rem 2.5rem;
-  border-radius: var(--radius-md);
-  text-align: center;
-  box-shadow: var(--shadow-sm);
-}
-
-.instructor-photo {
-  width: 160px;
-  height: 160px;
-  margin: 0 auto 1.5rem;
-  border-radius: var(--radius-full);
-  overflow: hidden;
-}
-
-.instructor-photo .avatar-svg {
-  width: 100%;
-  height: 100%;
-}
-
-.instructor-tag {
-  display: inline-block;
-  font-size: 0.75rem;
-  font-weight: 700;
-  color: var(--primary);
-  background-color: rgba(10, 10, 10, 0.04);
-  padding: 0.35rem 0.95rem;
-  border-radius: var(--radius-full);
-  margin-bottom: 1rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-.instructor-card-ui h3 {
-  margin-bottom: 0.25rem;
-}
-
-.instructor-card-ui p {
-  font-size: 0.9rem;
-}
-
-.instructor-bio-wrapper {
-  padding-left: 1rem;
-}
-
-.instructor-credentials {
-  margin-top: 2rem;
-}
-
-.credential-item {
-  position: relative;
-  padding-left: 1.75rem;
-  margin-bottom: 1.25rem;
-  font-size: 1.05rem;
-}
-
-.credential-item::before {
-  content: "✓";
-  position: absolute;
-  left: 0;
-  color: var(--primary);
-  font-weight: 800;
-}
-
-/* ==========================================================================
-   14. TESTIMONIAL SLIDER
-   ========================================================================== */
-.testimonial-slider-container {
-  background-color: var(--background);
-  border: 1px solid var(--border);
-  padding: 3.5rem;
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-sm);
-  position: relative;
-}
-
-.testimonial-slider {
-  position: relative;
-}
-
-.slide {
-  display: none;
-  opacity: 0;
-  transition: opacity 0.5s ease-in-out;
-}
-
-.slide.active {
-  display: block;
-  opacity: 1;
-}
-
-.testimonial-text {
-  font-size: clamp(1.15rem, 2.5vw, 1.4rem);
-  font-family: var(--font-secondary);
-  font-style: italic;
-  font-weight: 500;
-  color: var(--dark);
-  line-height: 1.6;
-  margin-bottom: 2rem;
-}
-
-.testimonial-author h4 {
-  font-size: 1.15rem;
-}
-
-.testimonial-author span {
-  font-size: 0.85rem;
-  color: var(--text-muted);
-}
-
-.slider-controls {
-  display: flex;
-  gap: 0.75rem;
-  margin-top: 2rem;
-}
-
-.slider-btn {
-  width: 44px;
-  height: 44px;
-  border-radius: var(--radius-full);
-  border: 1px solid var(--border);
-  background-color: var(--background);
-  color: var(--dark);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: var(--transition-bounce);
-}
-
-.slider-btn:hover {
-  background-color: var(--primary);
-  color: var(--white);
-  border-color: var(--primary);
-}
-
-/* ==========================================================================
-   15. PRICING SECTION
-   ========================================================================== */
-.pricing-card {
-  background-color: var(--background);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  padding: 3.5rem 2.5rem;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  transition: var(--transition-bounce);
-}
-
-.pricing-card.featured {
-  border-color: var(--dark);
-  border-width: 2px;
-  box-shadow: none;
-  transform: scale(1.03);
-  background: var(--background);
-}
-
-.pricing-card:hover {
-  transform: translateY(-6px);
-  box-shadow: none;
-  border-color: var(--dark);
-}
-
-.pricing-card.featured:hover {
-  transform: translateY(-6px) scale(1.03);
-}
-
-.featured-badge {
-  position: absolute;
-  top: 1.5rem;
-  right: 1.5rem;
-  font-size: 0.75rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  color: var(--dark);
-  background-color: var(--accent);
-  padding: 0.35rem 0.95rem;
-  border-radius: var(--radius-full);
-  letter-spacing: 0.05em;
-}
-
-.pricing-header h3 {
-  font-size: 1.85rem;
-  margin-bottom: 0.5rem;
-}
-
-.plan-desc {
-  font-size: 0.95rem;
-  margin-bottom: 2rem;
-  line-height: 1.5;
-}
-
-.price {
-  display: flex;
-  align-items: baseline;
-  margin-bottom: 0.5rem;
-}
-
-.price-usd {
-  font-size: 0.9rem;
-  color: var(--text-muted);
-  margin-bottom: 2rem;
-}
-
-.price-usd:has(+ .price-alt) {
-  margin-bottom: 0.35rem;
-}
-
-.price-alt {
-  font-size: 0.9rem;
-  color: var(--text-muted);
-  margin-bottom: 2rem;
-  padding-top: 0.5rem;
-  border-top: 1px dashed var(--border);
-}
-
-.price .currency {
-  font-size: 1.75rem;
-  font-weight: 800;
-  color: var(--dark);
-}
-
-.price .amount {
-  font-size: 3.75rem;
-  font-weight: 800;
-  color: var(--dark);
-  line-height: 1;
-}
-
-.price .period {
-  font-size: 0.95rem;
-  color: var(--text-muted);
-  margin-left: 0.35rem;
-}
-
-.plan-features {
-  list-style: none;
-  margin-bottom: 3rem;
-}
-
-.plan-features li {
-  margin-bottom: 1.1rem;
-  font-size: 0.95rem;
-  display: flex;
-  align-items: center;
-  gap: 0.85rem;
-}
-
-.plan-features li.disabled {
-  color: var(--text-muted);
-  text-decoration: line-through;
-  opacity: 0.55;
-}
-
-.plan-features .bullet {
-  font-weight: 800;
-  color: var(--primary);
-}
-
-.plan-features li.disabled .bullet {
-  color: var(--text-muted);
-}
-
-/* ==========================================================================
-   16. FAQ SECTION
-   ========================================================================== */
-.faq-accordion-container .accordion-header {
-  padding: 1.5rem;
-}
-
-.faq-q {
-  font-weight: 700;
-  font-size: 1.15rem;
-  color: var(--dark);
-  flex-grow: 1;
-  padding-right: 1.25rem;
-}
-
-/* ==========================================================================
-   17. COUNTDOWN SECTION
-   ========================================================================== */
-.countdown-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1.5rem;
-}
-
-.countdown-item {
-  background-color: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  padding: 1.75rem 1rem;
-  border-radius: var(--radius-sm);
-  min-width: 80px;
-}
-
-.time-num {
-  display: block;
-  font-family: var(--font-secondary);
-  font-weight: 800;
-  font-size: clamp(2rem, 4vw, 3rem);
-  color: var(--accent);
-  line-height: 1;
-  margin-bottom: 0.25rem;
-}
-
-.time-label {
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  color: #94a3b8;
-  letter-spacing: 0.08em;
-  font-weight: 600;
-}
-
-/* ==========================================================================
-   18. WAITLIST SECTION
-   ========================================================================== */
-.waitlist-card {
-  background-color: var(--background);
-  border: 1px solid var(--border);
-  padding: 4.5rem 3.5rem;
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-md);
-  text-align: center;
-}
-
-.waitlist-card h2 {
-  margin-top: 0.5rem;
-  margin-bottom: 1rem;
-}
-
-.waitlist-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1.15rem;
-}
-
-.form-group {
-  text-align: left;
-}
-
-.form-input {
-  width: 100%;
-  font-family: var(--font-primary);
-  font-size: 1rem;
-  padding: 0.95rem 1.35rem;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border);
-  background-color: var(--light);
-  color: var(--dark);
-  transition: var(--transition-smooth);
-}
-
-.form-input:focus {
-  outline: none;
-  border-color: var(--accent);
-  background-color: var(--background);
-  box-shadow: 0 0 0 4px rgba(242, 183, 5, 0.15);
-}
-
-.form-message {
-  margin-top: 0.75rem;
-  font-size: 0.95rem;
-  font-weight: 600;
-}
-
-.form-message.success {
-  color: #059669;
-}
-
-.form-message.error {
-  color: #ef4444;
-}
-
-/* Spinner for lock states */
-.spinner {
-  display: inline-block;
-  width: 18px;
-  height: 18px;
-  border: 2px solid rgba(255,255,255,0.3);
-  border-radius: 50%;
-  border-top-color: var(--white);
-  animation: spin 0.8s infinite linear;
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-/* ==========================================================================
-   19. CONTACT SECTION
-   ========================================================================== */
-.contact-methods {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-}
-
-.contact-method-item {
-  display: flex;
-  gap: 1.25rem;
-  align-items: center;
-}
-
-.icon-bubble {
-  width: 52px;
-  height: 52px;
-  border-radius: var(--radius-full);
-  background-color: rgba(10, 10, 10, 0.04);
-  color: var(--primary);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid rgba(10, 10, 10, 0.08);
-}
-
-.contact-method-item h4 {
-  font-size: 1.1rem;
-  margin-bottom: 0.15rem;
-}
-
-.contact-link {
-  font-size: 0.95rem;
-  color: var(--text-muted);
-}
-
-.contact-link:hover {
-  color: var(--primary);
-}
-
-.custom-card {
-  background-color: var(--background);
-  border: 1px solid var(--border);
-  padding: 3.5rem;
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-sm);
-}
-
-.contact-grid-buttons {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-/* ==========================================================================
-   20. MAIN FOOTER
-   ========================================================================== */
-.main-footer {
-  border-top: 1px solid #1e293b;
-}
-
-.footer-top {
-  display: grid;
-  grid-template-columns: 1.5fr repeat(3, 1fr);
-  gap: 3.5rem;
-}
-
-.footer-brand .logo-accent {
-  color: var(--accent);
-}
-
-.footer-brand .logo-mark {
-  color: var(--white);
-}
-
-.footer-brand p {
-  font-size: 0.95rem;
-  line-height: 1.6;
-}
-
-.footer-links-grid {
-  display: contents;
-}
-
-.footer-links-grid h4 {
-  color: var(--white);
-  font-size: 0.95rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  margin-bottom: 1.25rem;
-}
-
-.footer-links-grid ul {
-  list-style: none;
-}
-
-.footer-links-grid li {
-  margin-bottom: 0.85rem;
-}
-
-.footer-links-grid a {
-  color: #94a3b8;
-  font-size: 0.95rem;
-}
-
-.footer-links-grid a:hover {
-  color: var(--accent);
-}
-
-.footer-bottom {
-  border-top: 1px solid #1e293b;
-  padding-top: 2rem;
-}
-
-.footer-bottom p {
-  font-size: 0.85rem;
-}
-
-/* ==========================================================================
-   21. BACK TO TOP BUTTON
-   ========================================================================== */
-.back-to-top {
-  position: fixed;
-  bottom: -60px;
-  right: 30px;
-  width: 46px;
-  height: 46px;
-  background-color: var(--primary);
-  color: var(--white);
-  border: none;
-  border-radius: var(--radius-full);
-  cursor: pointer;
-  box-shadow: var(--shadow-md);
-  z-index: 999;
-  font-size: 1.25rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: var(--transition-bounce);
-}
-
-.back-to-top.visible {
-  bottom: 30px;
-}
-
-.back-to-top:hover {
-  background-color: var(--secondary);
-  transform: scale(1.08);
-}
-
-/* ==========================================================================
-   22. ANIMATION AND OBSERVER STYLES
-   ========================================================================== */
-.scroll-reveal {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.scroll-reveal.revealed {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.delay-1 { transition-delay: 0.1s; animation-delay: 0.1s; }
-.delay-2 { transition-delay: 0.2s; animation-delay: 0.2s; }
-.delay-3 { transition-delay: 0.3s; animation-delay: 0.3s; }
-
-/* Loading Fade In Keyframes */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pricing & FAQ | TREV AI Masterclass</title>
+  
+  <!-- SEO & Metadata -->
+  <meta name="description" content="Compare TREV AI Masterclass pricing tiers and get answers to common questions before you enroll.">
+  <meta name="keywords" content="AI Masterclass, Learn AI, Prompt Engineering, ChatGPT Africa, Google AI Studio, Claude, AI Automation, Tech Digital Skills, TREV AI, AI for Professionals">
+  <meta name="author" content="TREV AI">
+  <link rel="canonical" href="https://trev-ai.com/pricing.html">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://trev-ai.com/pricing.html">
+  <meta property="og:title" content="Pricing & FAQ | TREV AI Masterclass">
+  <meta property="og:description" content="Compare TREV AI Masterclass pricing tiers and get answers to common questions before you enroll.">
+  <meta property="og:image" content="https://trev-ai.com/assets/images/og-banner.png">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://trev-ai.com/pricing.html">
+  <meta property="twitter:title" content="Pricing & FAQ | TREV AI Masterclass">
+  <meta property="twitter:description" content="Compare TREV AI Masterclass pricing tiers and get answers to common questions before you enroll.">
+  <meta property="twitter:image" content="https://trev-ai.com/assets/images/og-banner.png">
+
+  <!-- Fonts Preconnect -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- Course Schema JSON-LD for SEO -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Course",
+    "name": "TREV AI Masterclass",
+    "description": "Comprehensive practical AI training program covering Prompt Engineering, ChatGPT, Gemini, Claude, NotebookLM, Automation, and multi-agent workflows.",
+    "provider": {
+      "@type": "Organization",
+      "name": "TREV AI",
+      "sameAs": "https://trev-ai.com"
+    },
+    "hasCourseInstance": {
+      "@type": "CourseInstance",
+      "courseMode": "Online",
+      "courseWorkload": "PT25H",
+      "offers": {
+        "@type": "Offer",
+        "price": "49.00",
+        "priceCurrency": "USD",
+        "category": "Paid"
+      }
+    }
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
+  </script>
+</head>
+<body class="bg-background text-text antialiased selection:bg-primary/20 selection:text-primary">
 
-.fade-in-up {
-  animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
+  <!-- Skip-Link for Accessibility -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
 
-/* ==========================================================================
-   23. RESPONSIVE BREAKPOINTS
-   ========================================================================== */
-@media (max-width: 1024px) {
-  .grid-3 { grid-template-columns: repeat(2, 1fr); }
-  .grid-4 { grid-template-columns: repeat(2, 1fr); }
-  .features-bento { grid-template-columns: repeat(2, 1fr); }
-  .bento-large { grid-column: span 2; }
-}
+  <!-- Header Section -->
+  <header class="main-header" id="header" role="banner">
+    <div class="header-container container">
+      <a href="index.html" class="logo" aria-label="TREV AI Homepage">
+        <svg class="logo-mark" width="30" height="30" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect x="2" y="20" width="7" height="14" rx="2" fill="currentColor"/>
+          <rect x="14.5" y="12" width="7" height="22" rx="2" fill="currentColor"/>
+          <rect x="27" y="2" width="7" height="32" rx="2" fill="currentColor"/>
+          <circle cx="30.5" cy="2" r="4.5" fill="var(--accent)"/>
+        </svg>
+        <span class="logo-accent">TREV</span> <span class="logo-text">AI</span>
+      </a>
+      
+      <button class="menu-toggle" aria-label="Toggle Navigation Menu" aria-controls="primary-nav" aria-expanded="false">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
 
-@media (max-width: 768px) {
-  .menu-toggle {
-    display: flex;
-  }
+      <nav class="primary-nav" id="primary-nav" aria-label="Main Directory">
+        <ul class="nav-links">
+          <li><a href="index.html#about" class="nav-link">About</a></li>
+          <li><a href="course.html#why-learn-ai" class="nav-link">Why Learn AI</a></li>
+          <li><a href="course.html#features" class="nav-link">Features</a></li>
+          <li><a href="course.html#modules" class="nav-link">Syllabus</a></li>
+          <li><a href="#pricing" class="nav-link">Pricing</a></li>
+          <li><a href="#faq" class="nav-link">FAQ</a></li>
+          <li><a href="contact.html#contact" class="nav-link">Contact</a></li>
+        </ul>
+        <div class="nav-cta">
+          <a href="#pricing" class="btn btn-primary btn-sm">Enroll Now</a>
+        </div>
+      </nav>
+    </div>
+  </header>
 
-  .primary-nav {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    background-color: var(--background);
-    border-bottom: 1px solid var(--border);
-    flex-direction: column;
-    padding: 2.5rem 0;
-    gap: 1.75rem;
-    box-shadow: var(--shadow-md);
-    transform: translateY(-150%);
-    opacity: 0;
-    pointer-events: none;
-    transition: var(--transition-smooth);
-  }
+  <main id="main-content">
 
-  .primary-nav.active {
-    transform: translateY(0);
-    opacity: 1;
-    pointer-events: all;
-  }
+    <!-- 12. PRICING SECTION -->
+    <section class="pricing-section py-lg bg-light" id="pricing">
+      <div class="container">
+        <div class="text-center max-w-lg mx-auto scroll-reveal">
+          <span class="section-tag">Pricing Plans</span>
+          <h2 class="section-heading">Choose Your Learning Path</h2>
+          <p class="section-desc">Select the plan that fits your goals. Start mastering practical AI operations today.</p>
+        </div>
 
-  .nav-links {
-    flex-direction: column;
-    align-items: center;
-    gap: 1.5rem;
-  }
+        <div class="grid-3 mt-md align-stretch">
+          
+          <!-- Starter Plan -->
+          <div class="pricing-card scroll-reveal">
+            <div class="pricing-header">
+              <h3>Starter</h3>
+              <p class="plan-desc">Perfect for individuals wanting to master foundational AI tools.</p>
+              <div class="price">
+                <span class="currency">₦</span><span class="amount">10,000</span>
+                <span class="period">/one-time</span>
+              </div>
+              <p class="price-usd">≈ $7 USD — for diaspora / international payment</p>
+            </div>
+            <ul class="plan-features">
+              <li><span class="bullet" aria-hidden="true">✓</span> Sessions 1 to 4</li>
+              <li><span class="bullet" aria-hidden="true">✓</span> Core Prompt Toolkit</li>
+              <li><span class="bullet" aria-hidden="true">✓</span> Secure Digital Certificate</li>
+              <li><span class="bullet" aria-hidden="true">✓</span> 3-Month Platform Access</li>
+              <li class="disabled"><span class="bullet" aria-hidden="true">✗</span> Weekly Live Q&As</li>
+              <li class="disabled"><span class="bullet" aria-hidden="true">✗</span> Private Community Access</li>
+            </ul>
+            <div class="pricing-footer">
+              <a href="https://wa.me/2348139908559?text=Hi%20TREV%20AI%21%20I%27d%20like%20to%20enroll%20in%20the%20Starter%20Package%20%28%E2%82%A610%2C000%20/%20~%247%29.%20Please%20guide%20me%20through%20the%20next%20steps." class="btn btn-outline btn-full" target="_blank" rel="noopener">Select Starter</a>
+            </div>
+          </div>
 
-  .grid-2, .grid-3, .grid-4, .features-bento {
-    grid-template-columns: 1fr;
-  }
+          <!-- Professional Plan -->
+          <div class="pricing-card featured scroll-reveal delay-1">
+            <div class="featured-badge">Highly Recommended</div>
+            <div class="pricing-header">
+              <h3>Professional</h3>
+              <p class="plan-desc">For power users, designers, and creators wanting complete automation mastery.</p>
+              <div class="price">
+                <span class="currency">₦</span><span class="amount">35,000</span>
+                <span class="period">/one-time</span>
+              </div>
+              <p class="price-usd">≈ $25 USD — for diaspora / international payment</p>
+            </div>
+            <ul class="plan-features">
+              <li><span class="bullet" aria-hidden="true">✓</span> All 7 Core Sessions</li>
+              <li><span class="bullet" aria-hidden="true">✓</span> Image & Video Generation</li>
+              <li><span class="bullet" aria-hidden="true">✓</span> Verifiable Digital Certificate</li>
+              <li><span class="bullet" aria-hidden="true">✓</span> 24-Month Material Updates</li>
+              <li><span class="bullet" aria-hidden="true">✓</span> Private Circle Community</li>
+              <li><span class="bullet" aria-hidden="true">✓</span> Weekly Live Coaching & Reviews</li>
+            </ul>
+            <div class="pricing-footer">
+              <a href="https://wa.me/2348139908559?text=Hi%20TREV%20AI%21%20I%27d%20like%20to%20enroll%20in%20the%20Professional%20Package%20%28%E2%82%A635%2C000%20/%20~%2425%29.%20Please%20guide%20me%20through%20the%20next%20steps." class="btn btn-primary btn-full" target="_blank" rel="noopener">Choose Professional</a>
+            </div>
+          </div>
 
-  .bento-large {
-    grid-column: span 1;
-  }
+          <!-- VIP Executive Plan -->
+          <div class="pricing-card scroll-reveal delay-2">
+            <div class="pricing-header">
+              <h3>VIP Executive</h3>
+              <p class="plan-desc">Best for founders, teams, and corporate group onboarding.</p>
+              <div class="price">
+                <span class="currency">₦</span><span class="amount">75,000</span>
+                <span class="period">/seat</span>
+              </div>
+              <p class="price-usd">≈ $54 USD/seat — for diaspora / international payment</p>
+              <p class="price-alt">Or ₦250,000 flat for a team of 5 (≈ $181 USD) — a 33% discount per seat</p>
+            </div>
+            <ul class="plan-features">
+              <li><span class="bullet" aria-hidden="true">✓</span> Complete Professional Package</li>
+              <li><span class="bullet" aria-hidden="true">✓</span> 1-on-1 Strategy Session</li>
+              <li><span class="bullet" aria-hidden="true">✓</span> Custom Automation Audit</li>
+              <li><span class="bullet" aria-hidden="true">✓</span> Direct Consultant Support</li>
+              <li><span class="bullet" aria-hidden="true">✓</span> Team Project Collaboration</li>
+              <li><span class="bullet" aria-hidden="true">✓</span> Custom Team Landing Page</li>
+            </ul>
+            <div class="pricing-footer">
+              <a href="https://wa.me/2348139908559?text=Hi%20TREV%20AI%21%20I%27m%20interested%20in%20the%20VIP%20Executive%20Package%20%28%E2%82%A675%2C000/seat%2C%20or%20%E2%82%A6250%2C000%20flat%20for%20a%20team%20of%205%29.%20Please%20guide%20me%20through%20the%20next%20steps." class="btn btn-outline btn-full" target="_blank" rel="noopener">Select VIP Executive</a>
+            </div>
+          </div>
 
-  .hero-stats {
-    flex-direction: column;
-    gap: 2.5rem;
-    align-items: center;
-  }
+        </div>
+      </div>
+    </section>
 
-  .footer-top {
-    grid-template-columns: 1fr;
-    gap: 2.5rem;
-  }
+    <!-- 13. FAQ SECTION -->
+    <section class="faq-section py-lg" id="faq">
+      <div class="container">
+        <div class="text-center max-w-lg mx-auto scroll-reveal">
+          <span class="section-tag">Questions</span>
+          <h2 class="section-heading">Frequently Asked Questions</h2>
+          <p class="section-desc">Everything you need to know about payments, schedules, and learning pathways.</p>
+        </div>
 
-  .instructor-bio-wrapper {
-    padding-left: 0;
-  }
+        <div class="faq-accordion-container mt-md mx-auto max-w-md">
+          
+          <div class="accordion-item scroll-reveal">
+            <button class="accordion-header" aria-expanded="false" aria-controls="faq-1-panel">
+              <span class="faq-q">Do I need coding experience to join?</span>
+              <span class="accordion-icon" aria-hidden="true"></span>
+            </button>
+            <div class="accordion-panel" id="faq-1-panel" hidden>
+              <div class="accordion-content">
+                <p>No coding experience is required. We focus entirely on highly practical, code-free models and visual systems to configure your automation processes.</p>
+              </div>
+            </div>
+          </div>
 
-  .waitlist-card {
-    padding: 3rem 1.5rem;
-  }
-}
+          <div class="accordion-item scroll-reveal">
+            <button class="accordion-header" aria-expanded="false" aria-controls="faq-2-panel">
+              <span class="faq-q">What payment methods do you accept?</span>
+              <span class="accordion-icon" aria-hidden="true"></span>
+            </button>
+            <div class="accordion-panel" id="faq-2-panel" hidden>
+              <div class="accordion-content">
+                <p>We support secure local card payments, direct bank transfers across major African networks (including Nigeria, Kenya, Ghana), and international credit cards via securely integrated payment partners.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item scroll-reveal">
+            <button class="accordion-header" aria-expanded="false" aria-controls="faq-3-panel">
+              <span class="faq-q">Can I balance this with a full-time job?</span>
+              <span class="accordion-icon" aria-hidden="true"></span>
+            </button>
+            <div class="accordion-panel" id="faq-3-panel" hidden>
+              <div class="accordion-content">
+                <p>Yes. The program is designed to be highly self-paced, allowing you to review video guides, projects, and templates on your own schedule.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item scroll-reveal">
+            <button class="accordion-header" aria-expanded="false" aria-controls="faq-4-panel">
+              <span class="faq-q">Will I receive a certificate of completion?</span>
+              <span class="accordion-icon" aria-hidden="true"></span>
+            </button>
+            <div class="accordion-panel" id="faq-4-panel" hidden>
+              <div class="accordion-content">
+                <p>Yes! Once you submit and pass your Capstone project, we issue a secure, verifiable digital certificate to share with potential employers.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item scroll-reveal">
+            <button class="accordion-header" aria-expanded="false" aria-controls="faq-5-panel">
+              <span class="faq-q">How long do I keep access to the materials?</span>
+              <span class="accordion-icon" aria-hidden="true"></span>
+            </button>
+            <div class="accordion-panel" id="faq-5-panel" hidden>
+              <div class="accordion-content">
+                <p>Our Professional and VIP plans include lifetime access, meaning you can return to the syllabus, community space, and new updates whenever you need.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item scroll-reveal">
+            <button class="accordion-header" aria-expanded="false" aria-controls="faq-6-panel">
+              <span class="faq-q">Which AI platforms are covered in the course?</span>
+              <span class="accordion-icon" aria-hidden="true"></span>
+            </button>
+            <div class="accordion-panel" id="faq-6-panel" hidden>
+              <div class="accordion-content">
+                <p>We work extensively with ChatGPT, Anthropic Claude, Google Gemini, NotebookLM, Google AI Studio, and no-code tools like Make and Zapier.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item scroll-reveal">
+            <button class="accordion-header" aria-expanded="false" aria-controls="faq-7-panel">
+              <span class="faq-q">Do I need to pay for premium subscriptions for these tools?</span>
+              <span class="accordion-icon" aria-hidden="true"></span>
+            </button>
+            <div class="accordion-panel" id="faq-7-panel" hidden>
+              <div class="accordion-content">
+                <p>No. Every system and prompt model we teach is designed to run perfectly on the free tiers of these platforms. We also show you how to leverage developer tools like Google AI Studio to query models without subscription costs.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item scroll-reveal">
+            <button class="accordion-header" aria-expanded="false" aria-controls="faq-8-panel">
+              <span class="faq-q">Is there support if I encounter challenges?</span>
+              <span class="accordion-icon" aria-hidden="true"></span>
+            </button>
+            <div class="accordion-panel" id="faq-8-panel" hidden>
+              <div class="accordion-content">
+                <p>Yes. You can ask questions directly inside our private community channels, or attend our weekly live online Q&A sessions to screen-share and troubleshoot with our instructors.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item scroll-reveal">
+            <button class="accordion-header" aria-expanded="false" aria-controls="faq-9-panel">
+              <span class="faq-q">Are group/corporate packages available?</span>
+              <span class="accordion-icon" aria-hidden="true"></span>
+            </button>
+            <div class="accordion-panel" id="faq-9-panel" hidden>
+              <div class="accordion-content">
+                <p>Yes! We provide bulk registration paths for companies, schools, and organizations. Contact our support team directly to configure a custom training flow.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item scroll-reveal">
+            <button class="accordion-header" aria-expanded="false" aria-controls="faq-10-panel">
+              <span class="faq-q">What are the hardware requirements?</span>
+              <span class="accordion-icon" aria-hidden="true"></span>
+            </button>
+            <div class="accordion-panel" id="faq-10-panel" hidden>
+              <div class="accordion-content">
+                <p>Any basic computer or tablet with a modern web browser and a stable internet connection is completely sufficient. All the heavy AI computing happens on external servers, not on your device.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item scroll-reveal">
+            <button class="accordion-header" aria-expanded="false" aria-controls="faq-11-panel">
+              <span class="faq-q">Is there a refund policy?</span>
+              <span class="accordion-icon" aria-hidden="true"></span>
+            </button>
+            <div class="accordion-panel" id="faq-11-panel" hidden>
+              <div class="accordion-content">
+                <p>We provide a 14-day conditional money-back guarantee. If you complete the initial modules and realize it isn't a fit for your workflow, just send us an email for a full, friendly refund.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item scroll-reveal">
+            <button class="accordion-header" aria-expanded="false" aria-controls="faq-12-panel">
+              <span class="faq-q">How does the community component work?</span>
+              <span class="accordion-icon" aria-hidden="true"></span>
+            </button>
+            <div class="accordion-panel" id="faq-12-panel" hidden>
+              <div class="accordion-content">
+                <p>Once you enroll in the Professional or VIP tiers, you receive an invitation to join our private community network. This platform allows you to collaborate, share project results, and find direct client referrals.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+  </main>
+
+  <!-- FOOTER SECTION -->
+  <footer class="main-footer bg-dark text-white py-md" role="contentinfo">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <span class="logo-accent">TREV</span> <span class="logo-text text-white">AI</span>
+          <p class="mt-xs text-gray">Technology. Research. Empower. Value. Elevating operational skills and digital efficiency across the African continent.</p>
+        </div>
+        <div class="footer-links-grid">
+          <div>
+            <h4>Quick Links</h4>
+            <ul>
+              <li><a href="index.html#about">About</a></li>
+              <li><a href="course.html#why-learn-ai">Why Learn AI</a></li>
+              <li><a href="course.html#modules">Syllabus</a></li>
+              <li><a href="#pricing">Pricing</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4>Legal Policies</h4>
+            <ul>
+              <li><a href="#">Terms of Service</a></li>
+              <li><a href="#">Privacy Policy</a></li>
+              <li><a href="#">Refund Policy</a></li>
+              <li><a href="#">Academic Ethics</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4>Social Channels</h4>
+            <ul class="social-links-list">
+              <li><a href="#" target="_blank" rel="noopener noreferrer">Twitter / X</a></li>
+              <li><a href="#" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+              <li><a href="#" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+              <li><a href="#" target="_blank" rel="noopener noreferrer">YouTube</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom text-center text-gray mt-md">
+        <p>&copy; 2026 TREV AI. All Rights Reserved. Empowering digital operations across Africa.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to Top Button -->
+  <button id="backToTop" class="back-to-top" aria-label="Scroll to top of the page">↑</button>
+
+  <script src="js/script.js" defer></script>
+</body>
+</html>

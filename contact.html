@@ -1,203 +1,394 @@
-<!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contact Us | TREV AI Masterclass</title>
-  
-  <!-- SEO & Metadata -->
-  <meta name="description" content="Get in touch with the TREV AI Masterclass team for enrollment questions, group pricing, or support.">
-  <meta name="keywords" content="AI Masterclass, Learn AI, Prompt Engineering, ChatGPT Africa, Google AI Studio, Claude, AI Automation, Tech Digital Skills, TREV AI, AI for Professionals">
-  <meta name="author" content="TREV AI">
-  <link rel="canonical" href="https://trev-ai.com/contact.html">
+/**
+ * TREV AI MASTERCLASS - DYNAMIC REFINED ENGINE
+ */
 
-  <!-- Open Graph / Facebook -->
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://trev-ai.com/contact.html">
-  <meta property="og:title" content="Contact Us | TREV AI Masterclass">
-  <meta property="og:description" content="Get in touch with the TREV AI Masterclass team for enrollment questions, group pricing, or support.">
-  <meta property="og:image" content="https://trev-ai.com/assets/images/og-banner.png">
+document.addEventListener('DOMContentLoaded', () => {
 
-  <!-- Twitter -->
-  <meta property="twitter:card" content="summary_large_image">
-  <meta property="twitter:url" content="https://trev-ai.com/contact.html">
-  <meta property="twitter:title" content="Contact Us | TREV AI Masterclass">
-  <meta property="twitter:description" content="Get in touch with the TREV AI Masterclass team for enrollment questions, group pricing, or support.">
-  <meta property="twitter:image" content="https://trev-ai.com/assets/images/og-banner.png">
+  // 1. STICKY HEADER & ACTIVE SECTIONS OBSERVER
+  const header = document.getElementById('header');
+  const navLinks = document.querySelectorAll('.nav-link');
+  const sections = document.querySelectorAll('section[id], #pricing, #faq, #contact');
 
-  <!-- Fonts Preconnect -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  const observerOptions = {
+    root: null,
+    rootMargin: '-10% 0px -70% 0px', // Strict intersection window
+    threshold: 0
+  };
 
-  <link rel="stylesheet" href="css/style.css">
-
-  <!-- Course Schema JSON-LD for SEO -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Course",
-    "name": "TREV AI Masterclass",
-    "description": "Comprehensive practical AI training program covering Prompt Engineering, ChatGPT, Gemini, Claude, NotebookLM, Automation, and multi-agent workflows.",
-    "provider": {
-      "@type": "Organization",
-      "name": "TREV AI",
-      "sameAs": "https://trev-ai.com"
-    },
-    "hasCourseInstance": {
-      "@type": "CourseInstance",
-      "courseMode": "Online",
-      "courseWorkload": "PT25H",
-      "offers": {
-        "@type": "Offer",
-        "price": "49.00",
-        "priceCurrency": "USD",
-        "category": "Paid"
+  const sectionObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.getAttribute('id');
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === `#${id}`) {
+            link.classList.add('active');
+          }
+        });
       }
+    });
+  }, observerOptions);
+
+  sections.forEach(section => sectionObserver.observe(section));
+
+  // Optimize header scroll event with passive flag for performance
+  const handleHeaderScroll = () => {
+    if (window.scrollY > 40) {
+      header.classList.add('scrolled');
+    } else {
+      header.classList.remove('scrolled');
     }
+  };
+
+  window.addEventListener('scroll', handleHeaderScroll, { passive: true });
+
+
+  // 2. MOBILE ACCESSIBLE MENU TOGGLE
+  const menuToggle = document.querySelector('.menu-toggle');
+  const primaryNav = document.getElementById('primary-nav');
+
+  if (menuToggle && primaryNav) {
+    const toggleMenu = (forceClose = false) => {
+      const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+      const shouldOpen = forceClose ? false : !isExpanded;
+
+      menuToggle.setAttribute('aria-expanded', shouldOpen);
+      primaryNav.classList.toggle('active', shouldOpen);
+      menuToggle.classList.toggle('open', shouldOpen);
+
+      const bars = menuToggle.querySelectorAll('.bar');
+      if (shouldOpen) {
+        bars[0].style.transform = 'rotate(45deg) translate(5px, 6px)';
+        bars[1].style.opacity = '0';
+        bars[2].style.transform = 'rotate(-45deg) translate(5px, -6px)';
+      } else {
+        bars[0].style.transform = 'none';
+        bars[1].style.opacity = '1';
+        bars[2].style.transform = 'none';
+      }
+    };
+
+    menuToggle.addEventListener('click', () => toggleMenu());
+
+    // Close menu on navigation link clicks
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => toggleMenu(true));
+    });
+
+    // Close menu when clicking outside the navbar
+    document.addEventListener('click', (e) => {
+      if (!header.contains(e.target) && primaryNav.classList.contains('active')) {
+        toggleMenu(true);
+      }
+    });
+
+    // Close menu on Escape keypress
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && primaryNav.classList.contains('active')) {
+        toggleMenu(true);
+      }
+    });
   }
-  </script>
-</head>
-<body class="bg-background text-text antialiased selection:bg-primary/20 selection:text-primary">
 
-  <!-- Skip-Link for Accessibility -->
-  <a href="#main-content" class="skip-link">Skip to main content</a>
 
-  <!-- Header Section -->
-  <header class="main-header" id="header" role="banner">
-    <div class="header-container container">
-      <a href="index.html" class="logo" aria-label="TREV AI Homepage">
-        <svg class="logo-mark" width="30" height="30" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <rect x="2" y="20" width="7" height="14" rx="2" fill="currentColor"/>
-          <rect x="14.5" y="12" width="7" height="22" rx="2" fill="currentColor"/>
-          <rect x="27" y="2" width="7" height="32" rx="2" fill="currentColor"/>
-          <circle cx="30.5" cy="2" r="4.5" fill="var(--accent)"/>
-        </svg>
-        <span class="logo-accent">TREV</span> <span class="logo-text">AI</span>
-      </a>
-      
-      <button class="menu-toggle" aria-label="Toggle Navigation Menu" aria-controls="primary-nav" aria-expanded="false">
-        <span class="bar"></span>
-        <span class="bar"></span>
-        <span class="bar"></span>
-      </button>
+  // 3. INTERSECTION OBSERVER - PROGRESSIVE SCROLL REVEALS
+  const revealElements = document.querySelectorAll('.scroll-reveal');
 
-      <nav class="primary-nav" id="primary-nav" aria-label="Main Directory">
-        <ul class="nav-links">
-          <li><a href="index.html#about" class="nav-link">About</a></li>
-          <li><a href="course.html#why-learn-ai" class="nav-link">Why Learn AI</a></li>
-          <li><a href="course.html#features" class="nav-link">Features</a></li>
-          <li><a href="course.html#modules" class="nav-link">Syllabus</a></li>
-          <li><a href="pricing.html#pricing" class="nav-link">Pricing</a></li>
-          <li><a href="pricing.html#faq" class="nav-link">FAQ</a></li>
-          <li><a href="#contact" class="nav-link">Contact</a></li>
-        </ul>
-        <div class="nav-cta">
-          <a href="pricing.html#pricing" class="btn btn-primary btn-sm">Enroll Now</a>
-        </div>
-      </nav>
-    </div>
-  </header>
+  if (revealElements.length > 0) {
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.05, // Lower threshold triggers easily
+      rootMargin: '0px 0px 100px 0px' // Positive margin triggers 100px before entering viewport
+    });
 
-  <main id="main-content">
+    revealElements.forEach(el => revealObserver.observe(el));
+  }
 
-    <!-- 16. CONTACT SECTION -->
-    <section class="contact-section py-lg" id="contact">
-      <div class="container grid-2">
-        <div class="contact-info scroll-reveal">
-          <span class="section-tag">Connect With Us</span>
-          <h2 class="section-heading">We are here to support your growth.</h2>
-          <p class="section-desc">Have bespoke inquiries, group enrollment questions, or sponsorship proposals? Get in touch with our team directly.</p>
-          
-          <div class="contact-methods mt-sm">
-            <div class="contact-method-item">
-              <div class="icon-bubble" aria-hidden="true">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary">
-                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                  <polyline points="22,6 12,13 2,6"/>
-                </svg>
-              </div>
-              <div>
-                <h4>Email Support</h4>
-                <a href="mailto:trevaisupport01@gmail.com" class="contact-link">trevaisupport01@gmail.com</a>
-              </div>
-            </div>
-            <div class="contact-method-item">
-              <div class="icon-bubble" aria-hidden="true">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary">
-                  <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.38 0 0 1 8 8v.5z"/>
-                </svg>
-              </div>
-              <div>
-                <h4>Direct Operations WhatsApp</h4>
-                <a href="https://wa.me/2348139908559" class="contact-link" target="_blank" rel="noopener noreferrer">+234 (0) 813-990-8559</a>
-              </div>
-            </div>
-          </div>
-        </div>
+
+  // 4. ANIMATED PERFORMANCE COUNTERS
+  const counters = document.querySelectorAll('.counter');
+
+  if (counters.length > 0) {
+    const counterObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const counter = entry.target;
+          const target = parseInt(counter.getAttribute('data-target'), 10);
+          const duration = 1800; // Animation lifecycle (ms)
+          const start = performance.now();
+
+          const animate = (timestamp) => {
+            const elapsed = timestamp - start;
+            const progress = Math.min(elapsed / duration, 1);
+            
+            // Ease-out cubic calculation
+            const easeProgress = 1 - Math.pow(1 - progress, 3);
+            const current = Math.floor(easeProgress * target);
+
+            counter.textContent = current.toLocaleString();
+
+            if (progress < 1) {
+              requestAnimationFrame(animate);
+            } else {
+              counter.textContent = target.toLocaleString();
+            }
+          };
+
+          requestAnimationFrame(animate);
+          observer.unobserve(counter);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    counters.forEach(counter => counterObserver.observe(counter));
+  }
+
+
+  // 5. LIFECYCLE ACCORDION HANDLING (Fluid Heights)
+  const accordions = document.querySelectorAll('.accordion-header');
+
+  accordions.forEach(header => {
+    header.addEventListener('click', () => {
+      const panel = header.nextElementSibling;
+      const isExpanded = header.getAttribute('aria-expanded') === 'true';
+
+      header.setAttribute('aria-expanded', !isExpanded);
+
+      if (!isExpanded) {
+        panel.removeAttribute('hidden');
+        panel.style.maxHeight = panel.scrollHeight + 'px';
         
-        <div class="contact-actions-panel scroll-reveal delay-1">
-          <div class="custom-card text-center">
-            <h3>Get In Touch Instantly</h3>
-            <p class="mb-6">Our channels are monitored directly by operational coordinators.</p>
-            <div class="contact-grid-buttons mt-sm">
-              <a href="https://wa.me/2348139908559" class="btn btn-primary btn-full" target="_blank" rel="noopener noreferrer">Chat Direct on WhatsApp</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+        // Remove hard pixel limits once transition ends to support layout reflows on resize
+        const handleTransitionEnd = (e) => {
+          if (e.propertyName === 'max-height') {
+            panel.style.maxHeight = 'fit-content';
+            panel.removeEventListener('transitionend', handleTransitionEnd);
+          }
+        };
+        panel.addEventListener('transitionend', handleTransitionEnd);
+
+      } else {
+        // Prepare collapse by converting fit-content to explicit scrollHeight first
+        panel.style.maxHeight = panel.scrollHeight + 'px';
+        
+        // Force rendering paint pass
+        panel.offsetHeight;
+
+        panel.style.maxHeight = '0';
+        
+        const handleCollapseEnd = (e) => {
+          if (e.propertyName === 'max-height') {
+            panel.setAttribute('hidden', '');
+            panel.removeEventListener('transitionend', handleCollapseEnd);
+          }
+        };
+        panel.addEventListener('transitionend', handleCollapseEnd);
+      }
+    });
+  });
 
 
-  </main>
+  // 6. TESTIMONIAL CAROUSEL ACCESSIBILITY & FOCUS TRACKING
+  const slides = document.querySelectorAll('.testimonial-slider .slide');
+  const prevBtn = document.querySelector('.prev-btn');
+  const nextBtn = document.querySelector('.next-btn');
+  let currentSlideIndex = 0;
+  let autoRotateInterval;
 
-  <!-- FOOTER SECTION -->
-  <footer class="main-footer bg-dark text-white py-md" role="contentinfo">
-    <div class="container">
-      <div class="footer-top">
-        <div class="footer-brand">
-          <span class="logo-accent">TREV</span> <span class="logo-text text-white">AI</span>
-          <p class="mt-xs text-gray">Technology. Research. Empower. Value. Elevating operational skills and digital efficiency across the African continent.</p>
-        </div>
-        <div class="footer-links-grid">
-          <div>
-            <h4>Quick Links</h4>
-            <ul>
-              <li><a href="index.html#about">About</a></li>
-              <li><a href="course.html#why-learn-ai">Why Learn AI</a></li>
-              <li><a href="course.html#modules">Syllabus</a></li>
-              <li><a href="pricing.html#pricing">Pricing</a></li>
-            </ul>
-          </div>
-          <div>
-            <h4>Legal Policies</h4>
-            <ul>
-              <li><a href="#">Terms of Service</a></li>
-              <li><a href="#">Privacy Policy</a></li>
-              <li><a href="#">Refund Policy</a></li>
-              <li><a href="#">Academic Ethics</a></li>
-            </ul>
-          </div>
-          <div>
-            <h4>Social Channels</h4>
-            <ul class="social-links-list">
-              <li><a href="#" target="_blank" rel="noopener noreferrer">Twitter / X</a></li>
-              <li><a href="#" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
-              <li><a href="#" target="_blank" rel="noopener noreferrer">Instagram</a></li>
-              <li><a href="#" target="_blank" rel="noopener noreferrer">YouTube</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="footer-bottom text-center text-gray mt-md">
-        <p>&copy; 2026 TREV AI. All Rights Reserved. Empowering digital operations across Africa.</p>
-      </div>
-    </div>
-  </footer>
+  if (slides.length > 0) {
+    const updateSlideFocus = (index) => {
+      slides.forEach((slide, idx) => {
+        if (idx === index) {
+          slide.classList.add('active');
+          slide.setAttribute('aria-hidden', 'false');
+          slide.setAttribute('tabindex', '0');
+        } else {
+          slide.classList.remove('active');
+          slide.setAttribute('aria-hidden', 'true');
+          slide.setAttribute('tabindex', '-1');
+        }
+      });
+    };
 
-  <!-- Back to Top Button -->
-  <button id="backToTop" class="back-to-top" aria-label="Scroll to top of the page">↑</button>
+    const handleNextSlide = () => {
+      currentSlideIndex = (currentSlideIndex + 1) % slides.length;
+      updateSlideFocus(currentSlideIndex);
+    };
 
-  <script src="js/script.js" defer></script>
-</body>
-</html>
+    const handlePrevSlide = () => {
+      currentSlideIndex = (currentSlideIndex - 1 + slides.length) % slides.length;
+      updateSlideFocus(currentSlideIndex);
+    };
+
+    const startAutoRotate = () => {
+      stopAutoRotate();
+      autoRotateInterval = setInterval(handleNextSlide, 8000);
+    };
+
+    const stopAutoRotate = () => {
+      if (autoRotateInterval) clearInterval(autoRotateInterval);
+    };
+
+    nextBtn.addEventListener('click', () => {
+      handleNextSlide();
+      startAutoRotate();
+    });
+
+    prevBtn.addEventListener('click', () => {
+      handlePrevSlide();
+      startAutoRotate();
+    });
+
+    // Auto rotate setup
+    startAutoRotate();
+    updateSlideFocus(currentSlideIndex);
+  }
+
+
+  // 7. TIMEZONE-AWARE COUNTDOWN SYSTEM
+  const daysEl = document.getElementById('days');
+  const hoursEl = document.getElementById('hours');
+  const minutesEl = document.getElementById('minutes');
+  const secondsEl = document.getElementById('seconds');
+
+  // Dynamic future target timeline (exactly 14 days from active system load date)
+  const targetDate = new Date();
+  targetDate.setDate(targetDate.getDate() + 14);
+
+  const processTimer = () => {
+    const now = new Date().getTime();
+    const distance = targetDate.getTime() - now;
+
+    if (distance < 0) {
+      const zeros = '00';
+      if (daysEl) daysEl.innerText = zeros;
+      if (hoursEl) hoursEl.innerText = zeros;
+      if (minutesEl) minutesEl.innerText = zeros;
+      if (secondsEl) secondsEl.innerText = zeros;
+      return;
+    }
+
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    if (daysEl) daysEl.innerText = days.toString().padStart(2, '0');
+    if (hoursEl) hoursEl.innerText = hours.toString().padStart(2, '0');
+    if (minutesEl) minutesEl.innerText = minutes.toString().padStart(2, '0');
+    if (secondsEl) secondsEl.innerText = seconds.toString().padStart(2, '0');
+  };
+
+  setInterval(processTimer, 1000);
+  processTimer();
+
+
+  // 8. BACK TO TOP VISIBILITY CONTROLLER
+  const backToTopBtn = document.getElementById('backToTop');
+
+  if (backToTopBtn) {
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 800) {
+        backToTopBtn.classList.add('visible');
+      } else {
+        backToTopBtn.classList.remove('visible');
+      }
+    }, { passive: true });
+
+    backToTopBtn.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+  }
+
+
+  // 9. SECURE FORMSPREE SUBMISSIONS
+  const waitlistForm = document.getElementById('waitlistForm');
+  const waitlistMessage = document.getElementById('waitlistMessage');
+  const submitBtn = document.getElementById('waitlistSubmitBtn');
+
+  if (waitlistForm && submitBtn) {
+    waitlistForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const nameInput = document.getElementById('waitlist-name');
+      const emailInput = document.getElementById('waitlist-email');
+      const name = nameInput.value.trim();
+      const email = emailInput.value.trim();
+
+      // Field validation
+      if (!name) {
+        renderFormFeedback('Please enter your full name.', 'error');
+        nameInput.focus();
+        return;
+      }
+
+      const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      if (!emailPattern.test(email)) {
+        renderFormFeedback('Please enter a valid email address.', 'error');
+        emailInput.focus();
+        return;
+      }
+
+      // Safe lock: Disable interface elements during submission
+      submitBtn.disabled = true;
+      nameInput.disabled = true;
+      emailInput.disabled = true;
+
+      const originalBtnHtml = submitBtn.innerHTML;
+      submitBtn.innerHTML = '<span class="spinner" aria-hidden="true"></span>';
+
+      renderFormFeedback('Securing your seat...', 'success');
+
+      // POST to Google Forms.
+      // ⚠️ REPLACE these 3 placeholders once your form is created:
+      //   GOOGLE_FORM_ACTION_URL — from "Get pre-filled link" on your form, minus the params
+      //   ENTRY_NAME / ENTRY_EMAIL — the entry.XXXXXXXXX IDs for the Name/Email fields
+      const GOOGLE_FORM_ACTION_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSd-66R2tZl5XCabrYUMcbpU6MNNLZlyZ_FhSpVEIuMAxbJ5Yw/formResponse';
+      const ENTRY_NAME = 'entry.1733220929';
+      const ENTRY_EMAIL = 'entry.605517944';
+
+      try {
+        const formData = new URLSearchParams();
+        formData.append(ENTRY_NAME, name);
+        formData.append(ENTRY_EMAIL, email);
+
+        // Google Forms doesn't allow reading the response cross-origin,
+        // so we submit with no-cors and treat "no network error" as success.
+        await fetch(GOOGLE_FORM_ACTION_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: formData.toString()
+        });
+
+        renderFormFeedback(`Welcome, ${name}! You are on the waitlist. Check your email shortly.`, 'success');
+        waitlistForm.reset();
+      } catch (err) {
+        renderFormFeedback('Network error. Please check your connection and try again.', 'error');
+      } finally {
+        // Restore controls
+        submitBtn.disabled = false;
+        nameInput.disabled = false;
+        emailInput.disabled = false;
+        submitBtn.innerHTML = originalBtnHtml;
+      }
+    });
+  }
+
+  const renderFormFeedback = (messageText, statusType) => {
+    if (waitlistMessage) {
+      waitlistMessage.textContent = messageText;
+      waitlistMessage.className = `form-message ${statusType}`;
+    }
+  };
+
+});
